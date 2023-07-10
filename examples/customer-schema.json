@@ -1,0 +1,56 @@
+title: Generated schema for Root
+type: object
+	properties:
+        CustomerExample:
+        	type: object
+          	properties:
+            	customerID:
+              		type: string
+            	firstName:
+              		type: string
+            	lastName:
+              		type: string
+            	displayName:
+              		type: string
+            	address:
+              		type: object
+            properties:
+                addressLine1:
+                	type: string
+                addressLine2:
+                	type: string
+                city:
+                	type: string
+                state:
+                	type: string
+                zipCode:
+                	type: string
+                country:
+                	type: string
+            required:
+            	- addressLine1
+                - addressLine2
+                - city
+                - state
+                - zipCode
+                - country
+            phone:
+            	type: string
+            email:
+            	type: string
+            ssn:
+            	type: string
+            dateOfBirth:
+            	type: string
+        required:
+        	- customerID
+            - firstName
+            - lastName
+            - displayName
+            - address
+            - phone
+            - email
+            - ssn
+            - dateOfBirth
+    required:
+    	- CustomerExample
