@@ -1,0 +1,8 @@
+#%RAML 1.0 Extension
+baseUri: <<insert prod-environment-specific implementation URL>>
+extends: ../acme-banking-api.raml
+
+/transactions:
+  /{transaction_id}:
+    type: member
+    put:

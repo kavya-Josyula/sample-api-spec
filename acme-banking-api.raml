@@ -1,0 +1,87 @@
+#%RAML 1.0
+version: v2
+title: ACME Banking API
+mediaType:
+  - application/json
+
+documentation:
+  - !include documentation/acmeBankDoc.raml
+  - !include documentation/acmeBankHeadline.raml
+  
+types:
+    Customer: !include /exchange_modules/103c4711-60fb-4ea7-870b-728265d742a4/banking-datatypes/1.0.0/datatypes/Customer.raml
+    Account: !include /exchange_modules/103c4711-60fb-4ea7-870b-728265d742a4/banking-datatypes/1.0.0/datatypes/Account.raml
+    Transaction: !include /exchange_modules/103c4711-60fb-4ea7-870b-728265d742a4/banking-datatypes/1.0.0/datatypes/Transaction.raml
+    CustomErrorMessage: !include datatypes/CustomErrorMessage.raml  
+
+resourceTypes:
+  collection: !include resourceTypes/collection.raml
+  member: !include resourceTypes/member.raml
+  stateSpecific: !include resourceTypes/stateSpecificResource.raml
+
+uses:
+  Traits: libraries/traitsLibrary.raml
+
+securitySchemes:
+  customTokenSecurity: !include securitySchemes/customTokenSecurity.raml
+  oauth2_0: !include /exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-oauth20-security-scheme/1.0.2/OAuth2.raml
+
+securedBy:
+  - customTokenSecurity
+    
+/customers:
+  type: collection
+  post:        
+  get:   
+    description: Retrieve all customers
+    displayName: Get all customers
+    securedBy:
+      - oauth2_0
+    is:
+      - Traits.cacheable:     
+      - Traits.hasAcceptHeader:         
+    responses:
+      200:        
+        body:      
+          application/json:
+            type: Customer[]
+            examples: !include examples/CustomersExample.raml
+          application/xml:   
+            type: Customer[]   
+            examples: !include examples/CustomersExample.raml      
+      404:
+        body:
+          type: CustomErrorMessage                 
+  /{customer_id}:    
+    type: member
+    get:
+    patch:
+    delete:               
+    /accounts:
+      get:    
+        is:
+          - Traits.hasGetResponse:
+    /status:
+      type: stateSpecific
+
+/accounts:
+  type: collection
+  post:                 
+  /{account_id}:
+    type: member
+    get:
+    put:
+    delete:             
+    /transactions:
+      get:     
+        is:
+          - Traits.hasGetResponse:                      
+
+/transactions:
+  type: collection      
+  post:
+  /{transaction_id}:
+    type: member
+    get:                
+             
+

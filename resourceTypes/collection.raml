@@ -1,0 +1,23 @@
+#%RAML 1.0 ResourceType
+post?:    
+  description: Create a new <<resourcePathName | !singularize>>
+  displayName: Add <<resourcePathName | !singularize>>
+  body:
+    application/json:      
+      type: <<resourcePathName | !singularize | !uppercamelcase>>
+  responses:
+    201:
+      headers:
+        Location: 
+          description: URL of the new <<resourcePathName | !singularize>> information
+          example: /<<resourcePathName>>/8f19cb50-3f57-4d38              
+      body:        
+    202:
+      description: The request has been accepted for processing. Use the URI provided in the Location header of the response to monitor the status.
+      headers:
+        Location:
+          example: /<<resourcePathName>>/1234/status                    
+    503:
+      body:
+        application/json:  
+          type: !include ../datatypes/CustomErrorMessage.raml    
